@@ -21,6 +21,8 @@ pipeline {
         stage('Packaging/Pushing image') {
             steps {
                 sh 'ls -la'
+                sh 'chmod +xwr Jenkinsfile'
+                sh 'chmod +xwr Dockerfile'
                 withDockerRegistry(credentialsId: 'dockerhub-acc', url: '') {
                     sh 'docker build -t khanhdx/jvkstack .'
                     sh 'docker push khanhdx/jvkstack'
