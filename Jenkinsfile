@@ -4,6 +4,7 @@ pipeline {
 
     tools {
         maven 'jvk-stack-maven'
+        docker 'docker-tool'
     }
     environment {
         DOCKERHUB_LOGIN = credentials('dockerhub-acc')
