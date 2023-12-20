@@ -20,8 +20,8 @@ pipeline {
 
         stage('Packaging/Pushing image') {
             steps {
-                ls -la
                 withDockerRegistry(credentialsId: 'dockerhub-acc', url: '') {
+                    ls -la
                     sh 'docker build -t khanhdx/jvkstack .'
                     sh 'docker push khanhdx/jvkstack'
                 }
