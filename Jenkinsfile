@@ -5,7 +5,9 @@ pipeline {
     tools {
         maven 'jvk-stack-maven'
     }
-
+    environment {
+        DOCKERHUB_LOGIN = credentials('dockerhub-acc')
+    }
     stages {
 
         stage('Build with Maven') {
@@ -19,9 +21,7 @@ pipeline {
         stage('Packaging/Pushing image to Dockerhub') {
             steps {
                 sh 'ls -la'
-                withDockerRegistry(credentialsId: 'dockerhub-acc', url: '') {
-
-                }
+                sh "docker login -u ${DOCKERHUB_LOGIN_USR} -p ${DOCKERHUB_LOGIN_PSW} https://index.docker.io/v1/"
                 sh 'docker build -t khanhdx/jvkstack .'
                 sh 'docker push khanhdx/jvkstack'
             }
