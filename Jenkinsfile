@@ -20,9 +20,10 @@ pipeline {
             steps {
                 sh 'ls -la'
                 withDockerRegistry(credentialsId: 'dockerhub-acc', url: '') {
-                    sh 'docker build -t khanhdx/jvkstack .'
-                    sh 'docker push khanhdx/jvkstack'
+
                 }
+                sh 'docker build -t khanhdx/jvkstack .'
+                sh 'docker push khanhdx/jvkstack'
             }
         }
 
