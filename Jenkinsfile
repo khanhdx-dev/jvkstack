@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('Scan') {
+        stage('SonarQube Scan') {
              steps {
                 withSonarQubeEnv(installationName: 'sonarqube-jenkins') {
                   sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
@@ -31,6 +31,7 @@ pipeline {
                 sh 'docker login -u $DOCKERHUB_LOGIN_USR -p $DOCKERHUB_LOGIN_PSW https://index.docker.io/v1/'
                 sh 'docker build -t khanhdx/jvkstack .'
                 sh 'docker push khanhdx/jvkstack'
+                sh 'java -version'
             }
         }
 
