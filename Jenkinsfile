@@ -34,7 +34,7 @@ pipeline {
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
 
-                sh 'docker container run -d --rm --name khanhdx-jvkstack -p 8081:8081 --network dev khanhdx/jvkstack'
+                sh 'docker container run -d --rm --name khanhdx-jvkstack -p 8081:9090 --network dev khanhdx/jvkstack'
             }
         }
 
