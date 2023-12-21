@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+        stage('Scan') {
+             steps {
+                withSonarQubeEnv(installationName: 'sonarqube-jenkins') {
+                  sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                }
+             }
+        }
+
         stage('Packaging/Pushing image to Dockerhub') {
             steps {
                 sh 'ls -la'
