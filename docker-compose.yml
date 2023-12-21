@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  jenkins-docker:
+    container_name:
+      docker-dind
+    build:
+      context: .
+    restart: always
+    ports:
+      - 2376:8080
+
+  jenkins-blueocean:
+    container_name:
+      jenkins-docker
+    build:
+      context: .
+    restart: always
+    ports:
+      - 8080:8080
+
+  sonarqube:
+    container_name:
+      sonarqube-docker
+    build:
+      context: .
+    restart: always
+    ports:
+      - 9000:9000
+
