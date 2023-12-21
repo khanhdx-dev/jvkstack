@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'jvk-stack-maven'
+        maven 'jenkins-maven-tool'
     }
     environment {
         DOCKERHUB_LOGIN = credentials('dockerhub-acc')
