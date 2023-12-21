@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'jvk-stack-maven'
+        maven 'jenkins-maven-tool'
     }
     environment {
         DOCKERHUB_LOGIN = credentials('dockerhub-acc')
@@ -28,7 +28,6 @@ pipeline {
 
         stage('Packaging/Pushing image to Dockerhub') {
             steps {
-                sh 'ls -la'
                 sh 'docker login -u $DOCKERHUB_LOGIN_USR -p $DOCKERHUB_LOGIN_PSW https://index.docker.io/v1/'
                 sh 'docker build -t khanhdx/jvkstack .'
                 sh 'docker push khanhdx/jvkstack'
@@ -43,7 +42,7 @@ pipeline {
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
 
-                sh 'docker container run -d --rm --name khanhdx-jvkstack -p 8081:8080 --network dev khanhdx/jvkstack'
+                sh 'docker container run -d --rm --name khanhdx-jvkstack -p 8081:9090 --network dev khanhdx/jvkstack'
             }
         }
 
