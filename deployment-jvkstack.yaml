@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-jvkstack
+  labels:
+    app: jvkstack
+    type: backend
+
+spec:
+  template:
+    metadata:
+      name: pod-jvkstack
+      labels:
+        app: jvkstack
+        type: backend
+    spec:
+      containers:
+        - name: jvkstack
+          image: khanhdx/jvkstack
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
