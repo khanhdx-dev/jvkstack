@@ -6,6 +6,7 @@ import com.jvkstackmvn.jvkstack.services.EntityAService;
 //import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 //import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 //import io.github.resilience4j.retry.annotation.Retry;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/entity")
@@ -36,6 +38,17 @@ public class EntityController {
     public ResponseEntity<?> saveEntity(@RequestBody EntityADto e){
         es.saveEntity(e);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/timezone")
+    public ResponseEntity<?> getTimeZone(){
+        try {
+            return new ResponseEntity<>(es.getTimezone().get(), HttpStatus.OK);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/circuit-breaker")

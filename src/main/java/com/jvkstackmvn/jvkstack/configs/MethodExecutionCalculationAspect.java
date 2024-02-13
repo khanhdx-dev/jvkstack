@@ -11,12 +11,11 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.*;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 @Aspect
 @Configuration
@@ -26,22 +25,32 @@ public class MethodExecutionCalculationAspect {
     @Autowired
     private SystemLogRepository systemLogRepository;
 
+    private String getRemoteAddress() {
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+            HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
+            return request.getRemoteAddr();
+        }
+        return null;
+    }
+
     @Around("com.jvkstackmvn.jvkstack.configs.CommonJoinPointConfig.businessLayerExecution()")
     public Object aroundService(@NotNull ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         LocalDateTime methodStartTime = LocalDateTime.now();
+        long start = System.currentTimeMillis();
         Object result = joinPoint.proceed();
+        long end = System.currentTimeMillis();
         LocalDateTime methodEndTime = LocalDateTime.now();
         systemLogRepository.save(
                 SystemLog.builder()
                         .methodStartTime(methodStartTime)
                         .methodEndTime(methodEndTime)
-                        .callerIp(HttpUtils.getRequestIP(request))
+                        .callerIp(getRemoteAddress())
                         .build()
         );
-        logger.info("Time Taken for processing service by {} is {} seconds",
+        logger.info("### Time Taken for processing service by {} is {} milliSeconds",
                 joinPoint,
-                (methodEndTime.toEpochSecond(ZoneOffset.UTC) - methodStartTime.toEpochSecond(ZoneOffset.UTC)));
+                end - start);
         return result;
     }
 
