@@ -17,7 +17,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/entity")
+@RequestMapping("/api/v1/entities")
 public class EntityController {
     @Autowired
     private EntityAService es;

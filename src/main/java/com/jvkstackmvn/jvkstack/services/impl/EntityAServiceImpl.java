@@ -2,14 +2,12 @@ package com.jvkstackmvn.jvkstack.services.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.jvkstackmvn.jvkstack.domains.dtos.EntityADto;
 import com.jvkstackmvn.jvkstack.domains.entities.EntityA;
 import com.jvkstackmvn.jvkstack.repositories.EntityRepository;
 import com.jvkstackmvn.jvkstack.services.EntityAService;
 import com.jvkstackmvn.jvkstack.services.external.TimezoneApi;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

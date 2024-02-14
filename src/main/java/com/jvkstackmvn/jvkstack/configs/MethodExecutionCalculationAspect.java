@@ -1,6 +1,5 @@
 package com.jvkstackmvn.jvkstack.configs;
 
-import com.jvkstackmvn.jvkstack.commons.utilities.HttpUtils;
 import com.jvkstackmvn.jvkstack.domains.entities.SystemLog;
 import com.jvkstackmvn.jvkstack.repositories.SystemLogRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.*;
 
